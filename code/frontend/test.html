@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>jQuery PUT 请求示例</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+  <button id="updateBtn">更新设备状态</button>
+
+  <script>
+    $(document).ready(function () {
+      $("#updateBtn").click(function () {
+        const deviceId = "d001";
+        const url = `https://api.olxok.top/api/devices/${deviceId}/status`;
+
+        const data = {
+          status: "off",
+          manufacturer: "北极星",
+        };
+
+        $.ajax({
+          url: url,
+          method: "PUT",
+          contentType: "application/json",
+          data: JSON.stringify(data),
+          success: function (response) {
+            alert("设备状态更新成功！");
+            console.log("响应数据:", response);
+          },
+          error: function (xhr, status, error) {
+            alert("设备状态更新失败！");
+            console.error("错误详情:", status, error);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

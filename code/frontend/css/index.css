@@ -1,0 +1,29 @@
+/* 
+ * 智能家居控制系统 - 主样式表
+ * 新拟态（Neumorphism）设计风格
+ */
+
+:root {
+  /* 主色调 */
+  --primary-bg: #e6e9ef;
+  --secondary-bg: #ecf0f3;
+  --text-color: #2d4263;
+  --text-muted: #7b8aa0;
+  --accent-color: #5b7fff;
+  --success-color: #4caf50;
+  --warning-color: #ff9800;
+  --danger-color: #f44336;
+  
+  /* 新拟态效果 */
+  --shadow-light: #ffffff;
+  --shadow-dark: #c8d0e7;
+  --distance: 8px;
+  --blur: 12px;
+  --border-radius: 15px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
