@@ -1,11 +1,276 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>智能家居控制系统 - 设备详情</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/device-detail.css">
 </head>
+
 <body>
-    
+    <main>
+
+        <!-- 头部大标题与欢迎用户 -->
+        <header class="website-head">
+            <div class="logo">
+                <span class="iconfont">&#xe64d;</span>
+                <h1>智能家居控制系统</h1>
+            </div>
+            <div class="user-info">
+                <span>欢迎，用户</span>
+                <div class="user-icon"></div>
+            </div>
+        </header>
+
+        <!-- 返回主页导航 -->
+        <nav class="backhome-nav">
+            <a class="backhome-btn" href="#">
+                <span class="iconfont">&#xe715;</span>
+                返回控制面板
+            </a>
+        </nav>
+
+        <!-- 整片控制区域 -->
+        <div class="device-content" id="device-content">
+
+            <!-- 头部控制区域 -->
+            <section class="device-header">
+
+                <div class="icon-and-info">
+                    <div class="device-icon">
+                        <span class="iconfont">&#xe69e;</span>
+                    </div>
+
+                    <div class="device-title">
+                        <h2 id="device-name">客厅主灯</h2>
+                        <p id="device-location">客厅</p>
+                        <div class="device-status">
+                            <span class="status-icon on" id="status-indicator"></span>
+                            <span class="status-text" id="status-text">开启</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <label class="switch">
+                    <input type="checkbox" class="switch-input" id="switch-input">
+                    <div class="check-btn"></div>
+                </label>
+
+            </section>
+
+            <!-- 中部控制面板 -->
+            <section class="device-controls">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>设备控制</h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- 动态控制面板，根据设备类型显示不同控件 -->
+                        <div id="slider-control">
+                            <div class="slider-control">
+                                <div class="slider-title">
+                                    <span class="slider-label">亮度</span>
+                                    <span class="slider-value">37%</span>
+                                </div>
+                                <input type="range" class="range-slider" id="brightness-slider" min="1" max="100"
+                                    value="37">
+                            </div>
+
+                            <div class="slider-control">
+                                <div class="slider-title">
+                                    <span class="slider-label">色温</span>
+                                    <span class="slider-value">2700K</span>
+                                </div>
+                                <input type="range" class="range-slider" id="color-temp-slider" min="2700" max="6500"
+                                    step="100" value="2700">
+                            </div>
+
+                            <div class="control-group">
+                                <h4>场景</h4>
+                                <div class="button-control-list">
+                                    <button class="control-btn" data-scene="reading">
+                                        <div class="control-btn-icon">
+                                            <span class="iconfont">&#xe6ca;</span>
+                                        </div>
+                                        <div>阅读</div>
+                                    </button>
+                                    <button class="control-btn" data-scene="relaxing">
+                                        <div class="control-btn-icon">
+                                            <span class="iconfont">&#xe60b;</span>
+                                        </div>
+                                        <div>放松</div>
+                                    </button>
+                                    <button class="control-btn" data-scene="working">
+                                        <div class="control-btn-icon">
+                                            <span class="iconfont">&#xe8af;</span>
+                                        </div>
+                                        <div>工作</div>
+                                    </button>
+                                    <button class="control-btn" data-scene="movie">
+                                        <div class="control-btn-icon">
+                                            <span class="iconfont">&#xe6e3;</span>
+                                        </div>
+                                        <div>电影</div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="device-info">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>设备信息</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="info-label">设备ID</span>
+                                <span class="info-value" id="device-id">d001</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">设备类型</span>
+                                <span class="info-value" id="device-type">智能灯</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">制造商</span>
+                                <span class="info-value" id="device-manufacturer">飞利浦</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">型号</span>
+                                <span class="info-value" id="device-model">Hue White A19</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">固件版本</span>
+                                <span class="info-value" id="device-firmware">1.4.2</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">连接方式</span>
+                                <span class="info-value" id="device-connection">WiFi</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">添加时间</span>
+                                <span class="info-value" id="device-added">2025-01-15</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">最后活动</span>
+                                <span class="info-value" id="device-last-active">2025-06-05 02:27:08</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="device-history">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>操作历史</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="history-list" id="history-list">
+                            <div class="history-item">
+                                <div class="history-icon">
+                                    <i class="fas fa-power-off"></i>
+                                </div>
+                                <div class="history-content">
+                                    <div class="history-action">设备开启</div>
+                                    <div class="history-time">2025-06-05 02:27:08</div>
+                                </div>
+                            </div>
+                            <div class="history-item">
+                                <div class="history-icon">
+                                    <i class="fas fa-power-off"></i>
+                                </div>
+                                <div class="history-content">
+                                    <div class="history-action">设备关闭</div>
+                                    <div class="history-time">2025-06-05 02:23:53</div>
+                                </div>
+                            </div>
+                            <div class="history-item">
+                                <div class="history-icon">
+                                    <i class="fas fa-power-off"></i>
+                                </div>
+                                <div class="history-content">
+                                    <div class="history-action">设备开启</div>
+                                    <div class="history-time">2025-06-05 02:23:51</div>
+                                </div>
+                            </div>
+                            <div class="history-item">
+                                <div class="history-icon">
+                                    <i class="fas fa-power-off"></i>
+                                </div>
+                                <div class="history-content">
+                                    <div class="history-action">设备关闭</div>
+                                    <div class="history-time">2025-06-05 02:23:50</div>
+                                </div>
+                            </div>
+                            <div class="history-item">
+                                <div class="history-icon">
+                                    <i class="fas fa-power-off"></i>
+                                </div>
+                                <div class="history-content">
+                                    <div class="history-action">设备关闭</div>
+                                    <div class="history-time">2025-06-05 02:23:49</div>
+                                </div>
+                            </div>
+                            <div class="history-item">
+                                <div class="history-icon">
+                                    <i class="fas fa-power-off"></i>
+                                </div>
+                                <div class="history-content">
+                                    <div class="history-action">设备开启</div>
+                                    <div class="history-time">2025-06-05 01:37:42</div>
+                                </div>
+                            </div>
+                            <div class="history-item">
+                                <div class="history-icon">
+                                    <i class="fas fa-power-off"></i>
+                                </div>
+                                <div class="history-content">
+                                    <div class="history-action">设备关闭</div>
+                                    <div class="history-time">2025-06-05 01:37:42</div>
+                                </div>
+                            </div>
+                            <div class="history-item">
+                                <div class="history-icon">
+                                    <i class="fas fa-power-off"></i>
+                                </div>
+                                <div class="history-content">
+                                    <div class="history-action">设备开启</div>
+                                    <div class="history-time">2025-06-05 01:34:40</div>
+                                </div>
+                            </div>
+                            <div class="history-item">
+                                <div class="history-icon">
+                                    <i class="fas fa-power-off"></i>
+                                </div>
+                                <div class="history-content">
+                                    <div class="history-action">设备关闭</div>
+                                    <div class="history-time">2025-06-05 01:34:36</div>
+                                </div>
+                            </div>
+                            <div class="history-item">
+                                <div class="history-icon">
+                                    <i class="fas fa-power-off"></i>
+                                </div>
+                                <div class="history-content">
+                                    <div class="history-action">设备开启</div>
+                                    <div class="history-time">2025-06-05 01:34:33</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
 </body>
+
 </html>
