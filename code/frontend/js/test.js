@@ -220,6 +220,11 @@ function toggleDeviceStatus(deviceId, newStatus) {
     });
 }
 
+/**
+ * 更新设备UI
+ * @param {string} deviceId - 设备ID
+ * @param {string} status - 设备状态
+ */
 function updateDeviceUI(deviceId, status) {
     const deviceCard = $(`.device-card[data-id="${deviceId}"]`);
     const statusIndicator = deviceCard.find('.status-indicator');
