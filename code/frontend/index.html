@@ -65,7 +65,7 @@
                         </div>
                         <div class="card-value">
                             <h3>开启设备</h3>
-                            <span>5</span>
+                            <span id="DeviceRunNum">5</span>
                         </div>
                     </div>
 
@@ -86,13 +86,13 @@
 
                 <div class="devices-box-header">
                     <h2>我的设备</h2>
-                    <button class="refresh-btn" id="refresh-devices">
+                    <button class="refresh-btn" id="refresh-devices" onclick="refreshDevices()">
                         <!-- 刷新icon -->
                         <span class="iconfont">&#xe629;</span>
                     </button>
                 </div>
 
-                <div class="devices-list">
+                <div class="devices-list" id="devices-list">
                     <div class="device-card" id="d001">
                         <div class="device-icon">
                             <!-- 设置图标 -->
@@ -247,6 +247,11 @@
         <p>© 2025 智能家居控制系统 | 结课项目</p>
     </footer>
 
+    <!-- 引入jquery库 -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <!-- 引入index页面的js文件，main.js -->
+    <script src="./js/main.js"></script>
+    <script></script>
 </body>
 
 </html>
