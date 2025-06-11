@@ -201,20 +201,120 @@ function loadDeviceDetails(deviceId) {
 4. **丰富的交互**：提供多种设备控制方式和实时反馈
 5. **完善的错误处理**：对各种异常情况进行处理，提高系统稳定性
 
-## 学习要点
+# 主脚本文档
 
-1. **前端技术**：
-   - HTML结构设计
-   - CSS新拟态风格实现
-   - JavaScript动态交互
-   - jQuery Ajax数据获取与提交
+## 文件信息
+- **文件名**: main.js
+- **路径**: `/code/frontend/js/main.js`
+- **功能**: 负责与后端API交互并动态更新UI
 
-2. **后端技术**：
-   - Express服务器搭建
-   - RESTful API设计与实现
-   - 模拟数据管理
+## 全局变量
 
-3. **交互设计**：
-   - 用户友好的界面设计
-   - 实时反馈机制
-   - 错误处理与提示
+### API_URL
+- **类型**: `const string`
+- **值**: `'https://api.olxok.top/api/devices'`
+- **用途**: 后端API的基础URL
+
+### allDevices
+- **类型**: `let array`
+- **用途**: 存储所有设备的数据
+
+### cardIconSet
+- **类型**: `const object`
+- **用途**: 设备类型与图标编码的映射表
+- **支持的设备类型**:
+  - light: 灯具
+  - thermostat: 温控器
+  - outlet: 插座
+  - fan: 风扇
+  - speaker: 音箱
+  - camera: 摄像头
+
+## 核心功能
+
+### 1. 初始化
+```javascript
+function init()
+```
+- 页面加载完成后执行
+- 初始化时间显示
+- 获取并显示设备数据
+
+### 2. 设备状态管理
+```javascript
+function updatedDeviceStatus(deviceId, newDeviceStatus)
+```
+- 更新设备开关状态
+- 发送PUT请求到后端
+- 更新本地数据并重新渲染
+
+### 3. 界面渲染
+```javascript
+function reloadCardList()
+```
+- 清空并重新渲染设备卡片列表
+- 根据设备类型显示对应图标
+- 显示设备状态（开启/关闭）
+
+### 4. 事件监听
+```javascript
+function addListeners()
+```
+包含两个子功能：
+- `addSwitchListeners()`: 设备开关状态切换
+- `addJumpLinkListeners()`: 详情页面跳转
+
+### 5. 数据统计
+```javascript
+function updatedDeviceRunNum()
+```
+- 统计当前开启的设备数量
+- 更新显示数值
+
+### 6. 时间更新
+```javascript
+function updatedLastTime()
+```
+- 格式化并显示当前时间
+- 用于显示最后更新时间
+
+## API 交互
+
+### 获取设备列表
+- **方法**: GET
+- **URL**: `${API_URL}`
+- **返回**: 设备数组
+
+### 更新设备状态
+- **方法**: PUT
+- **URL**: `${API_URL}/${deviceId}/status`
+- **数据格式**: `{ status: 'on'/'off' }`
+
+## 使用说明
+
+1. 页面加载时自动初始化：
+```javascript
+document.addEventListener('DOMContentLoaded', init);
+```
+
+2. 手动刷新数据：
+```javascript
+function refreshDevices()
+```
+- 重新获取设备数据
+- 更新最后更新时间
+
+## 注意事项
+
+1. 所有DOM操作都在`DOMContentLoaded`事件后执行
+2. 设备状态更改后会自动重新渲染整个列表
+3. 设备类型如果在`cardIconSet`中未定义，将使用默认图标（`&#xe606;`）
+
+## 未来优化建议
+
+1. 添加错误处理机制
+2. 实现设备详情页面功能
+3. 添加数据加载状态提示
+4. 考虑添加定时刷新功能
+5. 优化卡片列表的渲染性能，考虑使用虚拟列表
+        

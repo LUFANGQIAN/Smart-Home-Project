@@ -9,6 +9,15 @@
 const API_URL = 'https://api.olxok.top/api/devices';
 // 所有设备数据
 let allDevices = [];
+//所有图标键值对
+const cardIconSet = {
+  light: "&#xe69e;",
+  thermostat: "&#xe61e;",
+  outlet: "&#xe718;",
+  fan: "&#xe602;",
+  speaker: "&#xe600;",
+  camera: "&#xeca5;"
+}
 
 
 // 最后数据更新模块
@@ -23,30 +32,45 @@ function updatedLastTime() {
   const updatedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   console.log(updatedTime)
   lastTime = document.getElementById("last-updated-time")
-  lastTime.innerHTML = updatedTime
+  lastTime.innerHTML = updatedTime;
 }
 
 // 添加控制开关监听事件
 function addSwitchListeners() {
   allDevices.forEach(deviceInfo => {
     const switchInput = document.getElementById(`switch-input-${deviceInfo.id}`);
-    if (switchInput) {
-      switchInput.addEventListener('change', function () {
-        updatedDeviceStatus(deviceInfo.id, this.checked ? 'on' : 'off');
-      });
-    }
+    switchInput.addEventListener('change', function () {
+      updatedDeviceStatus(deviceInfo.id, this.checked ? 'on' : 'off');
+    });
   });
 }
 
 //添加详情按钮跳转页面监听事件
 function addJumpLinkListeners() {
-  console.log('待开发，敬请期待')
+  allDevices.forEach(deviceInfo => {
+    const detailsBtn = document.getElementById(`details-btn-${deviceInfo.id}`);
+    detailsBtn.addEventListener('click', function () {
+      window.location.href = `device.html?id=${deviceInfo.id}`;
+      console.log("`device.html?id=${device.id}`")
+    });
+  });
 }
 
 //添加所有监听事件函数
 function addListeners() {
   addSwitchListeners()
   addJumpLinkListeners()
+}
+
+//查找字体图标编号函数
+function findFonticonNum(deviceType) {
+  if (cardIconSet[deviceType] == undefined) {
+    return '&#xe606;';
+  }
+  else {
+    return cardIconSet[deviceType];
+  }
+
 }
 
 // 同步设备开启状态
@@ -83,22 +107,29 @@ function reloadCardList() {
   const cardList = document.getElementById('devices-list')
   cardList.innerHTML = '';
 
+
   allDevices.forEach(
     deviceInfo => {
       const card = document.createElement('div');
       card.className = "device-card";
       card.id = deviceInfo.id
-      let statusText
+
+      //根据开关状态选择文本
+      let statusText;
       if (deviceInfo.status == 'on') {
         statusText = '开启'
       } else {
         statusText = '关闭'
       }
 
+      //选择图标代码
+      let cardIcon;
+      cardIcon = findFonticonNum(deviceInfo.type)
+
       card.innerHTML = ` 
                         <div class="device-icon">
                             <!-- 设置图标 -->
-                            <span class="iconfont">&#xe69e;</span>
+                            <span class="iconfont">${cardIcon}</span>
                         </div>
                         <div class="device-info">
                             <h3 class="device-name">${deviceInfo.name}</h3>
@@ -115,7 +146,7 @@ function reloadCardList() {
                                     <input type="checkbox" class="switch-input" id="switch-input-${deviceInfo.id}" ${deviceInfo.status == 'on' ? 'checked' : ''}>
                                     <div class="check-btn"></div>
                                 </label>
-                                <button class="details-btn" id="${deviceInfo.id}">详情</button>
+                                <button class="details-btn" id="details-btn-${deviceInfo.id}">详情</button>
                             </div>
                         </div>
                     `
@@ -173,7 +204,16 @@ function refreshDevices() {
 }
 
 
+// 应用程序入口函数
+function init() {
+  // 初始化时间显示
+  updatedLastTime();
+  
+  // 获取设备数据并渲染界面
+  getAllDevicesInfo();
 
+}
 
-updatedLastTime()
-getAllDevicesInfo()
+// 页面加载完成后执行初始化
+document.addEventListener('DOMContentLoaded', init);
+

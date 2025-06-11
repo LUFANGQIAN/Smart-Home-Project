@@ -1,71 +1,45 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <title>开关按钮示例</title>
-  <style>
-    /* CSS样式 */
-    .switch-container {
-      display: flex;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 34px;
-    }
-
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .switch label {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      transition: .4s;
-      border-radius: 34px;
-    }
-
-    .switch label:before {
-      position: absolute;
-      content: "";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      transition: .4s;
-      border-radius: 50%;
-    }
-
-    .switch input:checked + label {
-      background-color: #2196F3;
-    }
-
-    .switch input:checked + label:before {
-      transform: translateX(26px);
-    }
-  </style>
-</head>
-<body>
-
-  <!-- HTML结构 -->
-  <div class="switch-container">
-    <div class="switch">
-      <input type="checkbox" id="toggle-switch" />
-      <label for="toggle-switch"></label>
-    </div>
+<div class="slider-control">
+  <div class="slider-title">
+    <span class="slider-label">亮度</span>
+    <span class="slider-value">37%</span>
   </div>
+  <input type="range" class="range-slider" id="brightness-slider" min="1" max="100" value="37">
+</div>
 
-</body>
-</html>
+<div class="slider-control">
+  <div class="slider-title">
+    <span class="slider-label">色温</span>
+    <span class="slider-value">2700K</span>
+  </div>
+  <input type="range" class="range-slider" id="color-temp-slider" min="2700" max="6500" step="100" value="2700">
+</div>
+
+<div class="control-group">
+  <h4>场景</h4>
+  <div class="button-control-list">
+    <button class="control-btn" data-scene="reading">
+      <div class="control-btn-icon">
+        <span class="iconfont">&#xe6ca;</span>
+      </div>
+      <div>阅读</div>
+    </button>
+    <button class="control-btn" data-scene="relaxing">
+      <div class="control-btn-icon">
+        <span class="iconfont">&#xe60b;</span>
+      </div>
+      <div>放松</div>
+    </button>
+    <button class="control-btn" data-scene="working">
+      <div class="control-btn-icon">
+        <span class="iconfont">&#xe8af;</span>
+      </div>
+      <div>工作</div>
+    </button>
+    <button class="control-btn" data-scene="movie">
+      <div class="control-btn-icon">
+        <span class="iconfont">&#xe6e3;</span>
+      </div>
+      <div>电影</div>
+    </button>
+  </div>
+</div>
