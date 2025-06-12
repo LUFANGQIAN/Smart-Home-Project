@@ -1,45 +1,7 @@
-<div class="slider-control">
-  <div class="slider-title">
-    <span class="slider-label">风速</span>
-    <span class="slider-value" id="speed-value">${thisDeviceInfo.settings.speed}</span>
-  </div>
-  <input type="range" class="range-slider" min="1" max="5" value="${thisDeviceInfo.settings.speed}" id="speed-slider">
+<div class="history-icon">
+  <span class="iconfont">&#xe604;</span>
 </div>
-
-
-
-<div class="control-group">
-  <h4>模式</h4>
-  <div class="button-control-list">
-    <button class="control-btn" data-mode="normal">
-      <div class="control-btn-icon">
-        <span class="iconfont">&#xe603;</span>
-      </div>
-      <div>正常</div>
-    </button>
-    <button class="control-btn" data-mode="natural">
-      <div class="control-btn-icon">
-        <span class="iconfont">&#xe601;</span>
-      </div>
-      <div>自然</div>
-    </button>
-    <button class="control-btn" data-mode="sleep">
-      <div class="control-btn-icon">
-        <span class="iconfont">&#xe719;</span>
-      </div>
-      <div>睡眠</div>
-    </button>
-  </div>
-</div>
-
-
-<h4>摇头</h4>
-<div class="fan-oscillation">
-  <label class="switch">
-    <input type="checkbox" class="switch-input" id="switch-input-${thisDeviceInfo.id}" ${thisDeviceInfo.status=='on'
-      ? 'checked' : '' }>
-    <div class="check-btn"></div>
-
-  </label>
-  <div class="fan-oscillation-state" id="fanOscillationState">开启</div>
+<div class="history-content">
+  <div class="history-action">设备开启</div>
+  <div class="history-time">2025-06-05 02:27:08</div>
 </div>

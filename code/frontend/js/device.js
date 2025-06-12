@@ -17,6 +17,37 @@ const cardIconSet = {
   camera: "&#xeca5;"
 }
 
+const historyIconSet = {
+  'power': '&#xe604;',
+  'setting': '&#xe855;'
+}
+
+
+
+//根据操作类型返回字体图标
+function findHistoryIconNum(actionType) {
+  if (historyIconSet[actionType] == undefined) {
+    return '&#xe606;';
+  }
+  else {
+    return historyIconSet[actionType];
+  }
+}
+
+function getDeviceTypeName(deviceType) {
+  const typeMap = {
+    'light': '智能灯',
+    'thermostat': '温控器',
+    'fan': '风扇',
+    'tv': '电视',
+    'speaker': '音箱',
+    'camera': '摄像头',
+    'lock': '智能锁',
+    'outlet': '智能插座'
+  };
+
+  return typeMap[deviceType] || '未知设备';
+}
 
 // 获取触发详情页的卡片id
 function getPageId() {
@@ -86,8 +117,21 @@ function updateDeviceSetting(deviceId, settingName, settingValue) {
       console.log(`设备 ${deviceId} ${settingName} 已更新为 ${settingValue}`);
     }
   });
+
 }
 
+
+//所有模块初始化
+function allModelInit() { 
+  // 加载第一个电源开关模块
+  renderDevicePower();
+  //根据设备类型选择对应的控制面板
+  selectControlPanelType(thisDeviceInfo.type);
+  // 加载设备基础信息模块
+  renderDeviceInfoCard();
+  // 加载设备操作历史模块
+  renderOperationHistoryCard()
+}
 
 
 //获取当前页面设备的相关信息并初始化
@@ -102,11 +146,12 @@ function getThisPageDeviceInfo() {
     success: function (res) {
       thisDeviceInfo = res;
       console.log(thisDeviceInfo);
-      renderDevicePower();
-      selectControlPanelType(thisDeviceInfo.type);
+      allModelInit();
     }
   });
 }
+
+
 
 //加载控制头部区域
 function renderDevicePower() {
@@ -496,16 +541,213 @@ function creatFanControlPanel() {
 
 // 构造音响控制面板函数
 function creatSpeakerControlPanel() {
+  speakerContorlPanel = document.getElementById('slider-control')
+
+  speakerContorlPanel.innerHTML = ''
+
+  speakerContorlPanel.innerHTML =
+    `
+
+  <div class="slider-control">
+    <div class="slider-title">
+      <span class="slider-label">音量</span>
+      <span class="slider-value" id="volume-value">${thisDeviceInfo.settings.volume}%</span>
+    </div>
+    <input type="range" class="range-slider" min="1" max="100" value="${thisDeviceInfo.settings.volume}"
+      id="volume-slider">
+  </div>
+
+
+
+  <div class="control-group">
+    <h4>播放控制</h4>
+    <div class="button-control-list">
+      <button class="playback-btn">
+        <div class="control-btn-icon">
+          <span class="iconfont">&#xe616;</span>
+        </div>
+        <div>上一曲</div>
+      </button>
+      <button class="playback-btn" id="playAndPause">
+        <div class="control-btn-icon">
+          <span class="iconfont" id="playAndPauseIcon">&#xe67e;</span>
+        </div>
+        <div id="playAndPauseText">暂停</div>
+      </button>
+      <button class="playback-btn">
+        <div class="control-btn-icon">
+          <span class="iconfont">&#xe615;</span>
+        </div>
+        <div>下一曲</div>
+      </button>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <h4>效果器</h4>
+    <div class="button-control-list">
+      <button class="control-btn" data-mode="normal">
+        <div class="control-btn-icon">
+          <span class="iconfont">&#xe855;</span>
+        </div>
+        <div>正常</div>
+      </button>
+      <button class="control-btn" data-mode="bass">
+        <div class="control-btn-icon">
+          <span class="iconfont">&#xe630;</span>
+        </div>
+        <div>重低音</div>
+      </button>
+      <button class="control-btn" data-mode="vocal">
+        <div class="control-btn-icon">
+          <span class="iconfont">&#xe65f;</span>
+        </div>
+        <div>人声</div>
+      </button>
+      <button class="control-btn" data-mode="rock">
+        <div class="control-btn-icon">
+          <span class="iconfont">&#xe605;</span>
+        </div>
+        <div>摇滚</div>
+      </button>
+    </div>
+  </div>
+
+  `
+
+  // 绑定音量滑动条监听事件
+  volumeSlider = document.getElementById('volume-slider');
+  volumeSlider.addEventListener('change', function () {
+    let value = volumeSlider.value
+    updateDeviceSetting(thisDeviceInfo.id, 'volume', value);
+  });
+  volumeSlider.addEventListener('input', function () {
+    let value = volumeSlider.value
+    document.getElementById('volume-value').innerText = value + '%';
+  });
+
+  // 获取所有场景按钮
+  const modeButtons = document.querySelectorAll('.control-btn');
+
+  modeButtons.forEach(button => {
+    button.addEventListener('click', function () {
+      const mode = this.dataset.mode;
+      console.log(mode);
+
+      // 移除其他按钮的 active 状态
+      modeButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+
+
+      // 调用现有 API 函数
+      updateDeviceSetting(thisDeviceInfo.id, 'equalizer', mode);
+
+    });
+  });
+
+  //根据后端数据为对应场景按钮添加active
+  modeButtons.forEach(button => {
+    if (button.dataset.mode == thisDeviceInfo.settings.equalizer) {
+      button.classList.add('active');
+    }
+  });
+
+
+  // 通过后端数据渲染暂停与播放按键
+  document.getElementById('playAndPauseIcon').innerHTML = `${thisDeviceInfo.settings.playing ? '&#xe67d;' : '&#xe67e;'}`
+
+  document.getElementById('playAndPauseText').innerText = `${thisDeviceInfo.settings.playing ? '暂停' : '播放'}`
+
+  //添加播放暂停按键监听事件
+  document.getElementById('playAndPause').addEventListener('click', function () {
+    let newPlaying = !thisDeviceInfo.settings.playing;
+    updateDeviceSetting(thisDeviceInfo.id, 'playing', newPlaying);
+    thisDeviceInfo.settings.playing = newPlaying
+
+    //更新本地缓存
+    document.getElementById('playAndPauseIcon').innerHTML = `${thisDeviceInfo.settings.playing ? '&#xe67d;' : '&#xe67e;'}`
+
+    document.getElementById('playAndPauseText').innerText = `${thisDeviceInfo.settings.playing ? '暂停' : '播放'}`
+  })
+
 
 }
 
 // 构造无功能控制面板函数
 function creatNoneControlPanel() {
+  noneContorlPanel = document.getElementById('slider-control')
+
+  noneContorlPanel.innerHTML = ''
+
+  noneContorlPanel.innerHTML =
+    `此设备没有高级控制选项`
+}
+
+//渲染设备信息卡片
+function renderDeviceInfoCard() {
+  //渲染设备ID
+  document.getElementById('device-id').innerText = thisDeviceInfo.id;
+  //渲染设备类型
+  document.getElementById('device-type').innerText = getDeviceTypeName(thisDeviceInfo.type);
+  //渲染设备制造商
+  document.getElementById('device-manufacturer').innerText = thisDeviceInfo.manufacturer;
+  //渲染设备型号
+  document.getElementById('device-model').innerText = thisDeviceInfo.model;
+  //渲染固件版本
+  document.getElementById('device-firmware').innerText = thisDeviceInfo.firmware;
+  //渲染设备连接方式
+  document.getElementById('device-connection').innerText = thisDeviceInfo.connection;
+  //渲染设备添加时间
+  document.getElementById('device-added').innerText = thisDeviceInfo.addedDate;
+  //渲染设备最后活跃时间
+  document.getElementById('device-last-active').innerText = thisDeviceInfo.lastActive;
 
 }
 
 
+//渲染操作历史卡片
+function renderOperationHistoryCard() {
+
+  const cardList = document.getElementById('history-list')
+  cardList.innerHTML = '';
+
+
+  thisDeviceInfo.history.forEach(
+    thisHistory => {
+      const card = document.createElement('div');
+      card.className = "history-item";
+
+
+      //选择图标代码
+      let cardIcon;
+      cardIcon = findHistoryIconNum(thisHistory.action)
+
+      card.innerHTML = ` 
+          <div class="history-icon">
+            <span class="iconfont">${cardIcon}</span>
+          </div>
+          <div class="history-content">
+            <div class="history-action">${thisHistory.description}</div>
+            <div class="history-time">${thisHistory.time}</div>
+          </div>
+                    `
+
+
+      cardList.appendChild(card)
+    }
+  )
+}
+
+
+
+
+
+
+// 应用程序入口函数
+function init() {
+//开始初始化页面
 getThisPageDeviceInfo()
+}
 
-
-
+// 页面加载完成后执行初始化
+document.addEventListener('DOMContentLoaded', init);
