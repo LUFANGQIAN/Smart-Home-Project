@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11177660",
+      "name": "下一曲",
+      "font_class": "ziyuan",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "11177661",
+      "name": "上一曲",
+      "font_class": "ziyuan1",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
       "icon_id": "17701",
       "name": "错误",
       "font_class": "cuowu",
@@ -130,13 +144,6 @@
       "font_class": "shuidi",
       "unicode": "e617",
       "unicode_decimal": 58903
-    },
-    {
-      "icon_id": "7432524",
-      "name": "上一曲",
-      "font_class": "prev",
-      "unicode": "e62f",
-      "unicode_decimal": 58927
     },
     {
       "icon_id": "9524660",

@@ -72,51 +72,70 @@
                         <div id="slider-control">
                             <div class="slider-control">
                                 <div class="slider-title">
-                                    <span class="slider-label">亮度</span>
-                                    <span class="slider-value">37%</span>
+                                    <span class="slider-label">音量</span>
+                                    <span class="slider-value" id="speed-value">1%</span>
                                 </div>
-                                <input type="range" class="range-slider" id="brightness-slider" min="1" max="100"
-                                    value="37">
+                                <input type="range" class="range-slider" min="1" max="100"
+                                    value="${thisDeviceInfo.settings.speed}" id="speed-slider">
                             </div>
 
-                            <div class="slider-control">
-                                <div class="slider-title">
-                                    <span class="slider-label">色温</span>
-                                    <span class="slider-value">2700K</span>
+
+
+                            <div class="control-group">
+                                <h4>播放控制</h4>
+                                <div class="button-control-list">
+                                    <button class="playback-btn">
+                                        <div class="control-btn-icon">
+                                            <span class="iconfont">&#xe616;</span>
+                                        </div>
+                                        <div>上一曲</div>
+                                    </button>
+                                    <button class="playback-btn">
+                                        <div class="control-btn-icon">
+                                            <span class="iconfont">&#xe67d;</span>
+                                        </div>
+                                        <div>暂停</div>
+                                    </button>
+                                    <button class="playback-btn">
+                                        <div class="control-btn-icon">
+                                            <span class="iconfont">&#xe615;</span>
+                                        </div>
+                                        <div>下一曲</div>
+                                    </button>
                                 </div>
-                                <input type="range" class="range-slider" id="color-temp-slider" min="2700" max="6500"
-                                    step="100" value="2700">
                             </div>
 
                             <div class="control-group">
-                                <h4>场景</h4>
+                                <h4>效果器</h4>
                                 <div class="button-control-list">
-                                    <button class="control-btn" data-scene="reading">
+                                    <button class="control-btn"  data-mode="normal">
                                         <div class="control-btn-icon">
-                                            <span class="iconfont">&#xe6ca;</span>
+                                            <span class="iconfont">&#xe855;</span>
                                         </div>
-                                        <div>阅读</div>
+                                        <div>正常</div>
                                     </button>
-                                    <button class="control-btn" data-scene="relaxing">
+                                    <button class="control-btn" data-mode="bass">
                                         <div class="control-btn-icon">
-                                            <span class="iconfont">&#xe60b;</span>
+                                            <span class="iconfont">&#xe630;</span>
                                         </div>
-                                        <div>放松</div>
+                                        <div>重低音</div>
                                     </button>
-                                    <button class="control-btn" data-scene="working">
+                                    <button class="control-btn" data-mode="vocal">
                                         <div class="control-btn-icon">
-                                            <span class="iconfont">&#xe8af;</span>
+                                            <span class="iconfont">&#xe65f;</span>
                                         </div>
-                                        <div>工作</div>
+                                        <div>人声</div>
                                     </button>
-                                    <button class="control-btn" data-scene="movie">
+                                    <button class="control-btn" data-mode="rock">
                                         <div class="control-btn-icon">
-                                            <span class="iconfont">&#xe6e3;</span>
+                                            <span class="iconfont">&#xe605;</span>
                                         </div>
-                                        <div>电影</div>
+                                        <div>摇滚</div>
                                     </button>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                 </div>

@@ -184,17 +184,17 @@ function creatLightControlPanel() {
     <div class="slider-control">
       <div class="slider-title">
         <span class="slider-label">亮度</span>
-        <span class="slider-value" id="brightness-value">37%</span>
+        <span class="slider-value" id="brightness-value">${thisDeviceInfo.settings.brightness}%</span>
       </div>
-      <input type="range" class="range-slider" min="1" max="100" value="37" id="brightness-slider">
+      <input type="range" class="range-slider" min="1" max="100" value="${thisDeviceInfo.settings.brightness}" id="brightness-slider">
     </div>
 
     <div class="slider-control">
       <div class="slider-title">
         <span class="slider-label" >色温</span>
-        <span class="slider-value" id="color-temperature-value">2700K</span>
+        <span class="slider-value" id="color-temperature-value">${thisDeviceInfo.settings.colorTemp}K</span>
       </div>
-      <input type="range" class="range-slider" min="2700" max="6500" step="100" value="2700" id="color-temperature-slider">
+      <input type="range" class="range-slider" min="2700" max="6500" step="100" value="${thisDeviceInfo.settings.colorTemp}" id="color-temperature-slider">
     </div>
 
     <div class="control-group">
@@ -289,11 +289,209 @@ function creatLightControlPanel() {
 // 构造空调控制面板函数
 function creatThermostatControlPanel() {
 
+  thermostatContorlPanel = document.getElementById('slider-control')
+
+  thermostatContorlPanel.innerHTML = ''
+
+  thermostatContorlPanel.innerHTML =
+    `
+    <div class="slider-control">
+      <div class="slider-title">
+        <span class="slider-label">温度设置</span>
+        <span class="slider-value" id="temperature-value">${thisDeviceInfo.settings.temperature}°C</span>
+      </div>
+      <input type="range" class="range-slider" min="16" max="30" step="0.5" value="${thisDeviceInfo.settings.temperature}" id="temperature-slider">
+    </div>
+
+
+
+    <div class="control-group">
+      <h4>模式</h4>
+      <div class="button-control-list">
+        <button class="control-btn" data-mode="cool">
+          <div class="control-btn-icon">
+            <span class="iconfont">&#xe638;</span>
+          </div>
+          <div>制冷</div>
+        </button>
+        <button class="control-btn" data-mode="heat">
+          <div class="control-btn-icon">
+            <span class="iconfont">&#xe634;</span>
+          </div>
+          <div>制热</div>
+        </button>
+        <button class="control-btn" data-mode="fan">
+          <div class="control-btn-icon">
+            <span class="iconfont">&#xe602;</span>
+          </div>
+          <div>通风</div>
+        </button>
+        <button class="control-btn" data-mode="auto">
+          <div class="control-btn-icon">
+            <span class="iconfont">&#xe68a;</span>
+          </div>
+          <div>自动</div>
+        </button>
+      </div>
+    </div>`
+
+  // 绑定空调温度滑动条监听事件
+  temperatureSlider = document.getElementById('temperature-slider');
+  temperatureSlider.addEventListener('change', function () {
+    let value = temperatureSlider.value
+    updateDeviceSetting(thisDeviceInfo.id, 'temperature', value);
+  });
+  temperatureSlider.addEventListener('input', function () {
+    let value = temperatureSlider.value
+    document.getElementById('temperature-value').innerText = value + '°C';
+  });
+
+
+
+  // 获取所有场景按钮
+  const modeButtons = document.querySelectorAll('.control-btn');
+
+  modeButtons.forEach(button => {
+    button.addEventListener('click', function () {
+      const mode = this.dataset.mode;
+      console.log(mode);
+
+      // 移除其他按钮的 active 状态
+      modeButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+
+      // 场景参数设置
+      let temperatureMode;
+      switch (mode) {
+        case 'cool': temperatureMode = 17; break;
+        case 'heat': temperatureMode = 30; break;
+        case 'fan': temperatureMode = 26; break;
+        case 'auto': temperatureMode = 24; break;
+      }
+
+      // 调用现有 API 函数
+      updateDeviceSetting(thisDeviceInfo.id, 'mode', mode);
+      updateDeviceSetting(thisDeviceInfo.id, 'temperature', temperatureMode);
+
+
+      //更新本地缓存
+      document.getElementById('temperature-value').innerText = temperatureMode + '°C';
+      temperatureSlider.value = temperatureMode;
+
+    });
+  });
+
 }
 
 // 构造风扇控制面板函数
 function creatFanControlPanel() {
 
+  fanContorlPanel = document.getElementById('slider-control')
+
+  fanContorlPanel.innerHTML = ''
+
+  fanContorlPanel.innerHTML =
+    `
+<div class="slider-control">
+  <div class="slider-title">
+    <span class="slider-label">风速</span>
+    <span class="slider-value" id="speed-value">${thisDeviceInfo.settings.speed}</span>
+  </div>
+  <input type="range" class="range-slider" min="1" max="5" value="${thisDeviceInfo.settings.speed}" id="speed-slider">
+</div>
+
+
+
+<div class="control-group">
+  <h4>模式</h4>
+  <div class="button-control-list">
+    <button class="control-btn" data-mode="normal">
+      <div class="control-btn-icon">
+        <span class="iconfont">&#xe603;</span>
+      </div>
+      <div>正常</div>
+    </button>
+    <button class="control-btn" data-mode="natural">
+      <div class="control-btn-icon">
+        <span class="iconfont">&#xe601;</span>
+      </div>
+      <div>自然</div>
+    </button>
+    <button class="control-btn" data-mode="sleep">
+      <div class="control-btn-icon">
+        <span class="iconfont">&#xe719;</span>
+      </div>
+      <div>睡眠</div>
+    </button>
+  </div>
+</div>
+
+
+<h4>摇头</h4>
+<div class="fan-oscillation">
+  <label class="switch">
+    <input type="checkbox" class="switch-input" id="switch-oscillation-${thisDeviceInfo.id}" ${thisDeviceInfo.settings.oscillation ? 'checked' : ''}>
+    <div class="check-btn"></div>
+
+  </label>
+  <div class="fan-oscillation-state" id="fanOscillationState">${thisDeviceInfo.settings.oscillation ? '开启' : '关闭'}</div>
+</div>
+`
+
+
+  // 绑定空调温度滑动条监听事件
+  speedSlider = document.getElementById('speed-slider');
+  speedSlider.addEventListener('change', function () {
+    let value = speedSlider.value
+    updateDeviceSetting(thisDeviceInfo.id, 'speed', value);
+  });
+  speedSlider.addEventListener('input', function () {
+    let value = speedSlider.value
+    document.getElementById('speed-value').innerText = value;
+  });
+
+
+
+  // 获取所有场景按钮
+  const modeButtons = document.querySelectorAll('.control-btn');
+
+  modeButtons.forEach(button => {
+    button.addEventListener('click', function () {
+      const mode = this.dataset.mode;
+      console.log(mode);
+
+      // 移除其他按钮的 active 状态
+      modeButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+
+      // 场景参数设置
+      let speedMode;
+      switch (mode) {
+        case 'normal': speedMode = 5; break;
+        case 'natural': speedMode = 3; break;
+        case 'sleep': speedMode = 1; break;
+      }
+
+      // 调用现有 API 函数
+      updateDeviceSetting(thisDeviceInfo.id, 'mode', mode);
+      updateDeviceSetting(thisDeviceInfo.id, 'speed', speedMode);
+
+
+      //更新本地缓存
+      document.getElementById('speed-value').innerText = speedMode;
+      speedSlider.value = speedMode;
+
+    });
+  });
+
+  //风扇摇头开关
+  const switchInput = document.getElementById(`switch-oscillation-${thisDeviceInfo.id}`);
+  const switchText = document.getElementById('fanOscillationState')
+  switchInput.addEventListener('change', function () {
+    updateDeviceSetting(thisDeviceInfo.id, "oscillation", this.checked ? true : false);
+    switchText.innerText = ''
+    switchText.innerText = `${this.checked ? '开启' : '关闭'}`
+  });
 }
 
 // 构造音响控制面板函数

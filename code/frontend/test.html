@@ -1,45 +1,45 @@
 <div class="slider-control">
   <div class="slider-title">
-    <span class="slider-label">亮度</span>
-    <span class="slider-value">37%</span>
+    <span class="slider-label">风速</span>
+    <span class="slider-value" id="speed-value">${thisDeviceInfo.settings.speed}</span>
   </div>
-  <input type="range" class="range-slider" id="brightness-slider" min="1" max="100" value="37">
+  <input type="range" class="range-slider" min="1" max="5" value="${thisDeviceInfo.settings.speed}" id="speed-slider">
 </div>
 
-<div class="slider-control">
-  <div class="slider-title">
-    <span class="slider-label">色温</span>
-    <span class="slider-value">2700K</span>
-  </div>
-  <input type="range" class="range-slider" id="color-temp-slider" min="2700" max="6500" step="100" value="2700">
-</div>
+
 
 <div class="control-group">
-  <h4>场景</h4>
+  <h4>模式</h4>
   <div class="button-control-list">
-    <button class="control-btn" data-scene="reading">
+    <button class="control-btn" data-mode="normal">
       <div class="control-btn-icon">
-        <span class="iconfont">&#xe6ca;</span>
+        <span class="iconfont">&#xe603;</span>
       </div>
-      <div>阅读</div>
+      <div>正常</div>
     </button>
-    <button class="control-btn" data-scene="relaxing">
+    <button class="control-btn" data-mode="natural">
       <div class="control-btn-icon">
-        <span class="iconfont">&#xe60b;</span>
+        <span class="iconfont">&#xe601;</span>
       </div>
-      <div>放松</div>
+      <div>自然</div>
     </button>
-    <button class="control-btn" data-scene="working">
+    <button class="control-btn" data-mode="sleep">
       <div class="control-btn-icon">
-        <span class="iconfont">&#xe8af;</span>
+        <span class="iconfont">&#xe719;</span>
       </div>
-      <div>工作</div>
-    </button>
-    <button class="control-btn" data-scene="movie">
-      <div class="control-btn-icon">
-        <span class="iconfont">&#xe6e3;</span>
-      </div>
-      <div>电影</div>
+      <div>睡眠</div>
     </button>
   </div>
+</div>
+
+
+<h4>摇头</h4>
+<div class="fan-oscillation">
+  <label class="switch">
+    <input type="checkbox" class="switch-input" id="switch-input-${thisDeviceInfo.id}" ${thisDeviceInfo.status=='on'
+      ? 'checked' : '' }>
+    <div class="check-btn"></div>
+
+  </label>
+  <div class="fan-oscillation-state" id="fanOscillationState">开启</div>
 </div>
