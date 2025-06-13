@@ -6,6 +6,12 @@
 // 全局变量
 
 // API接口URL
+// 创建加载动画元素
+const loader = document.createElement('div');
+loader.id = 'page-loader';
+loader.innerHTML = '<div class="loader-spinner"></div>';
+document.body.prepend(loader);
+
 const API_URL = 'https://api.olxok.top/api/devices';
 // 所有设备数据
 let allDevices = [];
@@ -160,6 +166,12 @@ function reloadCardList() {
 }
 
 //获取全部设备数据
+// 数据加载完成后移除加载动画
+function removeLoader() {
+  loader.style.opacity = '0';
+  setTimeout(() => loader.remove(), 500);
+}
+
 function getAllDevicesInfo() {
 
   // 使用jquery与ajax获取所有设备数据
@@ -169,6 +181,7 @@ function getAllDevicesInfo() {
     dataType: 'JSON',
     success: function (res) {
       allDevices = res;
+      removeLoader();
       console.log(allDevices);
       reloadCardList()
     }

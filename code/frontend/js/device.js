@@ -122,13 +122,13 @@ function updateDeviceSetting(deviceId, settingName, settingValue) {
 
 
 //所有模块初始化
-function allModelInit() { 
+function allModelInit() {
   // 加载第一个电源开关模块
   renderDevicePower();
   //根据设备类型选择对应的控制面板
   selectControlPanelType(thisDeviceInfo.type);
   // 加载设备基础信息模块
-  renderDeviceInfoCard();
+  initDeviceInfoHTML();
   // 加载设备操作历史模块
   renderOperationHistoryCard()
 }
@@ -683,26 +683,44 @@ function creatNoneControlPanel() {
     `此设备没有高级控制选项`
 }
 
-//渲染设备信息卡片
-function renderDeviceInfoCard() {
-  //渲染设备ID
-  document.getElementById('device-id').innerText = thisDeviceInfo.id;
-  //渲染设备类型
-  document.getElementById('device-type').innerText = getDeviceTypeName(thisDeviceInfo.type);
-  //渲染设备制造商
-  document.getElementById('device-manufacturer').innerText = thisDeviceInfo.manufacturer;
-  //渲染设备型号
-  document.getElementById('device-model').innerText = thisDeviceInfo.model;
-  //渲染固件版本
-  document.getElementById('device-firmware').innerText = thisDeviceInfo.firmware;
-  //渲染设备连接方式
-  document.getElementById('device-connection').innerText = thisDeviceInfo.connection;
-  //渲染设备添加时间
-  document.getElementById('device-added').innerText = thisDeviceInfo.addedDate;
-  //渲染设备最后活跃时间
-  document.getElementById('device-last-active').innerText = thisDeviceInfo.lastActive;
-
+//初始化设备信息卡片骨架
+function initDeviceInfoHTML() {
+  infoCard = document.getElementById('infoGrid')
+  infoCard.innerHTML = ''
+  infoCard.innerHTML = `<div class="info-item">
+  <span class="info-label">设备ID</span>
+  <span class="info-value" id="device-id">${thisDeviceInfo.id}</span>
+</div>
+<div class="info-item">
+  <span class="info-label">设备类型</span>
+  <span class="info-value" id="device-type">${getDeviceTypeName(thisDeviceInfo.type)}</span>
+</div>
+<div class="info-item">
+  <span class="info-label">制造商</span>
+  <span class="info-value" id="device-manufacturer">${thisDeviceInfo.manufacturer}</span>
+</div>
+<div class="info-item">
+  <span class="info-label">型号</span>
+  <span class="info-value" id="device-model">${thisDeviceInfo.model}</span>
+</div>
+<div class="info-item">
+  <span class="info-label">固件版本</span>
+  <span class="info-value" id="device-firmware">${thisDeviceInfo.firmware}</span>
+</div>
+<div class="info-item">
+  <span class="info-label">连接方式</span>
+  <span class="info-value" id="device-connection">${thisDeviceInfo.connection}</span>
+</div>
+<div class="info-item">
+  <span class="info-label">添加时间</span>
+  <span class="info-value" id="device-added">${thisDeviceInfo.addedDate}</span>
+</div>
+<div class="info-item">
+  <span class="info-label">最后活动</span>
+  <span class="info-value" id="device-last-active">${thisDeviceInfo.lastActive}</span>
+</div>`
 }
+
 
 
 //渲染操作历史卡片
@@ -745,8 +763,8 @@ function renderOperationHistoryCard() {
 
 // 应用程序入口函数
 function init() {
-//开始初始化页面
-getThisPageDeviceInfo()
+  //开始初始化页面
+  getThisPageDeviceInfo()
 }
 
 // 页面加载完成后执行初始化

@@ -38,26 +38,10 @@
             <!-- 头部控制区域 -->
             <section class="device-header" id="device-header">
 
-                <div class="icon-and-info">
-                    <div class="device-icon">
-                        <span class="iconfont">&#xe69e;</span>
-                    </div>
 
-                    <div class="device-title">
-                        <h2 id="device-name">客厅主灯</h2>
-                        <p id="device-location">客厅</p>
-                        <div class="device-status">
-                            <span class="status-icon on" id="status-indicator"></span>
-                            <span class="status-text" id="status-text">开启</span>
-                        </div>
-                    </div>
+                <div class="loadInfo">
+                    <div>数据加载中…………</div>
                 </div>
-
-
-                <label class="switch">
-                    <input type="checkbox" class="switch-input" id="switch-input">
-                    <div class="check-btn"></div>
-                </label>
 
             </section>
 
@@ -70,71 +54,10 @@
                     <div class="card-body">
                         <!-- 动态控制面板，根据设备类型显示不同控件 -->
                         <div id="slider-control">
-                            <div class="slider-control">
-                                <div class="slider-title">
-                                    <span class="slider-label">音量</span>
-                                    <span class="slider-value" id="speed-value">1%</span>
-                                </div>
-                                <input type="range" class="range-slider" min="1" max="100"
-                                    value="${thisDeviceInfo.settings.speed}" id="speed-slider">
+
+                            <div class="loadInfo">
+                                <div>数据加载中…………</div>
                             </div>
-
-
-
-                            <div class="control-group">
-                                <h4>播放控制</h4>
-                                <div class="button-control-list">
-                                    <button class="playback-btn">
-                                        <div class="control-btn-icon">
-                                            <span class="iconfont">&#xe616;</span>
-                                        </div>
-                                        <div>上一曲</div>
-                                    </button>
-                                    <button class="playback-btn">
-                                        <div class="control-btn-icon" id="playAndPause">
-                                            <span class="iconfont" id="playAndPauseIcon" >&#xe67d;</span>
-                                        </div>
-                                        <div id="playAndPauseText">暂停</div>
-                                    </button>
-                                    <button class="playback-btn">
-                                        <div class="control-btn-icon">
-                                            <span class="iconfont">&#xe615;</span>
-                                        </div>
-                                        <div>下一曲</div>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <h4>效果器</h4>
-                                <div class="button-control-list">
-                                    <button class="control-btn"  data-mode="normal">
-                                        <div class="control-btn-icon">
-                                            <span class="iconfont">&#xe855;</span>
-                                        </div>
-                                        <div>正常</div>
-                                    </button>
-                                    <button class="control-btn" data-mode="bass">
-                                        <div class="control-btn-icon">
-                                            <span class="iconfont">&#xe630;</span>
-                                        </div>
-                                        <div>重低音</div>
-                                    </button>
-                                    <button class="control-btn" data-mode="vocal">
-                                        <div class="control-btn-icon">
-                                            <span class="iconfont">&#xe65f;</span>
-                                        </div>
-                                        <div>人声</div>
-                                    </button>
-                                    <button class="control-btn" data-mode="rock">
-                                        <div class="control-btn-icon">
-                                            <span class="iconfont">&#xe605;</span>
-                                        </div>
-                                        <div>摇滚</div>
-                                    </button>
-                                </div>
-                            </div>
-
 
                         </div>
                     </div>
@@ -147,39 +70,12 @@
                         <h3>设备信息</h3>
                     </div>
                     <div class="card-body">
-                        <div class="info-grid">
-                            <div class="info-item">
-                                <span class="info-label">设备ID</span>
-                                <span class="info-value" id="device-id">d001</span>
+                        <div class="info-grid" id="infoGrid">
+
+                            <div class="loadInfo">
+                                <div>数据加载中…………</div>
                             </div>
-                            <div class="info-item">
-                                <span class="info-label">设备类型</span>
-                                <span class="info-value" id="device-type">智能灯</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">制造商</span>
-                                <span class="info-value" id="device-manufacturer">飞利浦</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">型号</span>
-                                <span class="info-value" id="device-model">Hue White A19</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">固件版本</span>
-                                <span class="info-value" id="device-firmware">1.4.2</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">连接方式</span>
-                                <span class="info-value" id="device-connection">WiFi</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">添加时间</span>
-                                <span class="info-value" id="device-added">2025-01-15</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">最后活动</span>
-                                <span class="info-value" id="device-last-active">2025-06-05 02:27:08</span>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -193,15 +89,10 @@
                     <div class="card-body">
                         <div class="history-list" id="history-list">
 
-                            <div class="history-item">
-                                <div class="history-icon">
-                                    <span class="iconfont">&#xe604;</span>
-                                </div>
-                                <div class="history-content">
-                                    <div class="history-action">设备开启</div>
-                                    <div class="history-time">2025-06-05 02:27:08</div>
-                                </div>
+                            <div class="loadInfo">
+                                <div>数据加载中…………</div>
                             </div>
+
 
 
 
